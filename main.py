@@ -2,7 +2,7 @@ import asyncio
 import logging
 import sys
 from os import getenv
-import local_settings as settings
+import config
 
 from aiogram import Bot, Dispatcher, Router, types
 from aiogram.enums import ParseMode
@@ -10,7 +10,7 @@ from aiogram.filters import CommandStart
 from aiogram.types import Message, WebAppInfo
 from aiogram.utils.markdown import hbold
 
-TOKEN = settings.TOKEN
+TOKEN = config.TOKEN
 
 # All handlers should be attached to the Router (or Dispatcher)
 dp = Dispatcher()
@@ -21,10 +21,16 @@ async def command_start_handler(message: Message) -> None:
     """
     This handler receives messages with `/start` command
     """
-    # следующие две строчки не работают
-    # markup = types.ReplyKeyboardMarkup()
-    # markup.add(types.KeyboardButton('Сделать заказ', web_app=WebAppInfo('https://ru.wikipedia.org/wiki/%D0%A8%D0%B0%D1%83%D1%80%D0%BC%D0%B0')))
     await message.answer(f"Hello, {hbold(message.from_user.full_name)}!")
+    keyboard = types.ReplyKeyboardMarkup(
+        keyboard=[
+            [
+                types.KeyboardButton('Сделать заказ', web_app=WebAppInfo('https://ru.wikipedia.org/wiki/%D0%A8%D0%B0%D1%83%D1%80%D0%BC%D0%B0'))
+            ],
+        ],
+        resize_keyboard=True,
+    )
+    
 
 
 @dp.message()
