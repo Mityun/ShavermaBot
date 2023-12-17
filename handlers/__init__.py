@@ -1,2 +1,4 @@
-from . import inline
-from . import default
+from .admin import dp
+from .user import dp
+
+__all__ = ["dp"]

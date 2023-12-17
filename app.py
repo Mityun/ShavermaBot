@@ -40,7 +40,6 @@ async def cmd_start(message: types.Message):
 
 @dp.message_handler(text=user_message)
 async def user_mode(message: types.Message):
-
     cid = message.chat.id
     if cid in config.ADMINS:
         config.ADMINS.remove(cid)
