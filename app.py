@@ -11,18 +11,19 @@ filters.setup(dp)
 
 WEBAPP_HOST = "0.0.0.0"
 WEBAPP_PORT = int(os.environ.get("PORT", 5000))
-user_message = 'Пользователь'
-admin_message = 'Админ'
+user_message = "Пользователь"
+admin_message = "Админ"
 
 
-@dp.message_handler(commands='start')
+@dp.message_handler(commands="start")
 async def cmd_start(message: types.Message):
 
     markup = ReplyKeyboardMarkup(resize_keyboard=True)
 
     markup.row(user_message, admin_message)
 
-    await message.answer('''Привет! 👋
+    await message.answer(
+        """Привет! 👋
 
 🤖 Я бот-магазин по подаже товаров любой категории.
     
@@ -32,7 +33,9 @@ async def cmd_start(message: types.Message):
 
 ❓ Возникли вопросы? Не проблема! Команда /sos поможет связаться с админами, которые постараются как можно быстрее откликнуться.
 
-    ''', reply_markup=markup)
+    """,
+        reply_markup=markup,
+    )
 
 
 @dp.message_handler(text=user_message)
@@ -42,7 +45,9 @@ async def user_mode(message: types.Message):
     if cid in config.ADMINS:
         config.ADMINS.remove(cid)
 
-    await message.answer('Включен пользовательский режим.', reply_markup=ReplyKeyboardRemove())
+    await message.answer(
+        "Включен пользовательский режим.", reply_markup=ReplyKeyboardRemove()
+    )
 
 
 @dp.message_handler(text=admin_message)
@@ -52,7 +57,7 @@ async def admin_mode(message: types.Message):
     if cid not in config.ADMINS:
         config.ADMINS.append(cid)
 
-    await message.answer('Включен админский режим.', reply_markup=ReplyKeyboardRemove())
+    await message.answer("Включен админский режим.", reply_markup=ReplyKeyboardRemove())
 
 
 async def on_startup(dp):
@@ -71,7 +76,7 @@ async def on_shutdown():
     logging.warning("Bot down")
 
 
-if name == 'main':
+if name == "main":
 
     if "HEROKU" in list(os.environ.keys()):
 
