@@ -1,60 +1,90 @@
-import asyncio
+import os
+import handlers
+from aiogram import executor, types
+from aiogram.types import ReplyKeyboardMarkup, ReplyKeyboardRemove
+from data import config
+from loader import dp, db, bot
+import filters
 import logging
-import sys
-from os import getenv
-import config
 
-from aiogram import Bot, Dispatcher, Router, types
-from aiogram.enums import ParseMode
-from aiogram.filters import CommandStart
-from aiogram.types import Message, WebAppInfo
-from aiogram.utils.markdown import hbold
+filters.setup(dp)
 
-TOKEN = config.TOKEN
-
-# All handlers should be attached to the Router (or Dispatcher)
-dp = Dispatcher()
+WEBAPP_HOST = "0.0.0.0"
+WEBAPP_PORT = int(os.environ.get("PORT", 5000))
+user_message = 'Пользователь'
+admin_message = 'Админ'
 
 
-@dp.message(CommandStart())
-async def command_start_handler(message: Message) -> None:
-    """
-    This handler receives messages with `/start` command
-    """
-    await message.answer(f"Hello, {hbold(message.from_user.full_name)}!")
-    keyboard = types.ReplyKeyboardMarkup(
-        keyboard=[
-            [
-                types.KeyboardButton('Сделать заказ', web_app=WebAppInfo('https://ru.wikipedia.org/wiki/%D0%A8%D0%B0%D1%83%D1%80%D0%BC%D0%B0'))
-            ],
-        ],
-        resize_keyboard=True,
-    )
+@dp.message_handler(commands='start')
+async def cmd_start(message: types.Message):
+
+    markup = ReplyKeyboardMarkup(resize_keyboard=True)
+
+    markup.row(user_message, admin_message)
+
+    await message.answer('''Привет! 👋
+
+🤖 Я бот-магазин по подаже товаров любой категории.
     
+🛍 Чтобы перейти в каталог и выбрать приглянувшиеся товары возпользуйтесь командой /menu.
+
+💰 Пополнить счет можно через Яндекс.кассу, Сбербанк или Qiwi.
+
+❓ Возникли вопросы? Не проблема! Команда /sos поможет связаться с админами, которые постараются как можно быстрее откликнуться.
+
+    ''', reply_markup=markup)
 
 
-@dp.message()
-async def echo_handler(message: types.Message) -> None:
-    """
-    Handler will forward receive a message back to the sender
+@dp.message_handler(text=user_message)
+async def user_mode(message: types.Message):
 
-    By default, message handler will handle all message types (like a text, photo, sticker etc.)
-    """
-    try:
-        # Send a copy of the received message
-        await message.send_copy(chat_id=message.chat.id)
-    except TypeError:
-        # But not all the types is supported to be copied so need to handle it
-        await message.answer("Nice try!")
+    cid = message.chat.id
+    if cid in config.ADMINS:
+        config.ADMINS.remove(cid)
+
+    await message.answer('Включен пользовательский режим.', reply_markup=ReplyKeyboardRemove())
 
 
-async def main() -> None:
-    # Initialize Bot instance with a default parse mode which will be passed to all API calls
-    bot = Bot(TOKEN, parse_mode=ParseMode.HTML)
-    # And the run events dispatching
-    await dp.start_polling(bot)
+@dp.message_handler(text=admin_message)
+async def admin_mode(message: types.Message):
+
+    cid = message.chat.id
+    if cid not in config.ADMINS:
+        config.ADMINS.append(cid)
+
+    await message.answer('Включен админский режим.', reply_markup=ReplyKeyboardRemove())
 
 
-if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, stream=sys.stdout)
-    asyncio.run(main())
+async def on_startup(dp):
+    logging.basicConfig(level=logging.INFO)
+    db.create_tables()
+
+    await bot.delete_webhook()
+    await bot.set_webhook(config.WEBHOOK_URL)
+
+
+async def on_shutdown():
+    logging.warning("Shutting down..")
+    await bot.delete_webhook()
+    await dp.storage.close()
+    await dp.storage.wait_closed()
+    logging.warning("Bot down")
+
+
+if name == 'main':
+
+    if "HEROKU" in list(os.environ.keys()):
+
+        executor.start_webhook(
+            dispatcher=dp,
+            webhook_path=config.WEBHOOK_PATH,
+            on_startup=on_startup,
+            on_shutdown=on_shutdown,
+            skip_updates=True,
+            host=WEBAPP_HOST,
+            port=WEBAPP_PORT,
+        )
+
+    else:
+
+        executor.start_polling(dp, on_startup=on_startup, skip_updates=False)
