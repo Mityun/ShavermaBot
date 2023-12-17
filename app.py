@@ -76,7 +76,7 @@ async def on_shutdown():
     logging.warning("Bot down")
 
 
-if name == "main":
+if __name__ == '__main__':
 
     if "HEROKU" in list(os.environ.keys()):
 
