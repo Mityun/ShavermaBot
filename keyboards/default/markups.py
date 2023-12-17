@@ -13,10 +13,19 @@ def confirm_markup():
     return markup
 
 def back_markup():
-    pass
+    markup = ReplyKeyboardMarkup(resize_keyboard=True, selective=True)
+    markup.add(back_message)
+
+    return markup
 
 def check_markup():
-    pass
+    markup = ReplyKeyboardMarkup(resize_keyboard=True, selective=True)
+    markup.row(back_message, all_right_message)
+
+    return markup
 
 def submit_markup():
-    pass
+    markup = ReplyKeyboardMarkup(resize_keyboard=True, selective=True)
+    markup.row(cancel_message, all_right_message)
+
+    return markup
