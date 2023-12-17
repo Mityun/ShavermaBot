@@ -64,9 +64,6 @@ async def on_startup(dp):
     logging.basicConfig(level=logging.INFO)
     db.create_tables()
 
-    await bot.delete_webhook()
-    await bot.set_webhook(config.WEBHOOK_URL)
-
 
 async def on_shutdown():
     logging.warning("Shutting down..")
