@@ -76,5 +76,5 @@ async def on_shutdown():
     logging.warning("Bot down")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     executor.start_polling(dp, on_startup=on_startup, skip_updates=False)
