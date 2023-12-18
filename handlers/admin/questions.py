@@ -35,6 +35,7 @@ async def process_questions(message: Message):
 
             await message.answer(question, reply_markup=markup)
 
+
 @dp.callback_query_handler(IsAdmin(), question_cb.filter(action="answer"))
 async def process_answer(query: CallbackQuery, callback_data: dict, state: FSMContext):
     async with state.proxy() as data:
@@ -75,4 +76,3 @@ async def process_send_answer(message: Message, state: FSMContext):
         await bot.send_message(cid, text)
 
     await state.finish()
-

@@ -20,4 +20,3 @@ def product_markup(idx, count):
     markup.row(back_btn, count_btn, next_btn)
 
     return markup
-
