@@ -6,7 +6,6 @@ product_cb = CallbackData("product", "id", "action")
 
 
 def product_markup(idx="", price=0):
-
     global product_cb
 
     markup = InlineKeyboardMarkup()

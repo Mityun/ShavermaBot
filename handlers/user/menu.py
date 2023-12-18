@@ -11,21 +11,21 @@ settings = "⚙️ Настройка каталога"
 orders = "🚚 Заказы"
 questions = "❓ Вопросы"
 
-
 @dp.message_handler(IsAdmin(), commands="menu")
 async def admin_menu(message: Message):
-    markup = ReplyKeyboardMarkup(selective=True)
+    markup = ReplyKeyboardMarkup(selective=True, resize_keyboard=True)
     markup.add(settings)
     markup.add(questions, orders)
 
-    await message.answer("Меню", reply_markup=markup)
+    await message.answer("Меню Админа", reply_markup=markup)
 
 
 @dp.message_handler(IsUser(), commands="menu")
 async def user_menu(message: Message):
-    markup = ReplyKeyboardMarkup(selective=True)
+    markup = ReplyKeyboardMarkup(selective=True, resize_keyboard=True)
     markup.add(catalog)
     markup.add(balance, cart)
     markup.add(delivery_status)
 
-    await message.answer("Меню", reply_markup=markup)
+    await message.answer("Меню Пользователя", reply_markup=markup)
+

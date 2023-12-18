@@ -19,18 +19,13 @@ question_cb = CallbackData("question", "cid", "action")
 
 @dp.message_handler(IsAdmin(), text=questions)
 async def process_questions(message: Message):
-
     await bot.send_chat_action(message.chat.id, ChatActions.TYPING)
     questions = db.fetchall("SELECT * FROM questions")
 
     if len(questions) == 0:
-
         await message.answer("Нет вопросов.")
-
     else:
-
         for cid, question in questions:
-
             markup = InlineKeyboardMarkup()
             markup.add(
                 InlineKeyboardButton(
@@ -40,10 +35,8 @@ async def process_questions(message: Message):
 
             await message.answer(question, reply_markup=markup)
 
-
 @dp.callback_query_handler(IsAdmin(), question_cb.filter(action="answer"))
 async def process_answer(query: CallbackQuery, callback_data: dict, state: FSMContext):
-
     async with state.proxy() as data:
         data["cid"] = callback_data["cid"]
 
@@ -53,7 +46,6 @@ async def process_answer(query: CallbackQuery, callback_data: dict, state: FSMCo
 
 @dp.message_handler(IsAdmin(), state=AnswerState.answer)
 async def process_submit(message: Message, state: FSMContext):
-
     async with state.proxy() as data:
         data["answer"] = message.text
 
@@ -71,9 +63,7 @@ async def process_send_answer(message: Message, state: FSMContext):
 
 @dp.message_handler(IsAdmin(), text=all_right_message, state=AnswerState.submit)
 async def process_send_answer(message: Message, state: FSMContext):
-
     async with state.proxy() as data:
-
         answer = data["answer"]
         cid = data["cid"]
 
@@ -85,3 +75,4 @@ async def process_send_answer(message: Message, state: FSMContext):
         await bot.send_message(cid, text)
 
     await state.finish()
+

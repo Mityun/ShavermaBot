@@ -5,7 +5,6 @@ product_cb = CallbackData("product", "id", "action")
 
 
 def product_markup(idx, count):
-
     global product_cb
 
     markup = InlineKeyboardMarkup()
@@ -21,3 +20,4 @@ def product_markup(idx, count):
     markup.row(back_btn, count_btn, next_btn)
 
     return markup
+

@@ -8,6 +8,7 @@ from aiogram.types import (
     InlineKeyboardMarkup,
     InlineKeyboardButton,
 )
+from data.config import ADMINS
 from keyboards.inline.products_from_cart import product_markup, product_cb
 from aiogram.utils.callback_data import CallbackData
 from keyboards.default.markups import *
@@ -20,15 +21,12 @@ from .menu import cart
 
 @dp.message_handler(IsUser(), text=cart)
 async def process_cart(message: Message, state: FSMContext):
-
     cart_data = db.fetchall("SELECT * FROM cart WHERE cid=?", (message.chat.id,))
 
     if len(cart_data) == 0:
-
         await message.answer("Ваша корзина пуста.")
 
     else:
-
         await bot.send_chat_action(message.chat.id, ChatActions.TYPING)
         async with state.proxy() as data:
             data["products"] = {}
@@ -36,11 +34,9 @@ async def process_cart(message: Message, state: FSMContext):
         order_cost = 0
 
         for _, idx, count_in_cart in cart_data:
-
             product = db.fetchone("SELECT * FROM products WHERE idx=?", (idx,))
 
             if product == None:
-
                 db.query("DELETE FROM cart WHERE idx=?", (idx,))
 
             else:
@@ -70,37 +66,27 @@ async def process_cart(message: Message, state: FSMContext):
 async def product_callback_handler(
     query: CallbackQuery, callback_data: dict, state: FSMContext
 ):
-
     idx = callback_data["id"]
     action = callback_data["action"]
 
     if "count" == action:
-
         async with state.proxy() as data:
-
             if "products" not in data.keys():
-
                 await process_cart(query.message, state)
 
             else:
-
                 await query.answer("Количество - " + data["products"][idx][2])
 
     else:
-
         async with state.proxy() as data:
-
             if "products" not in data.keys():
-
                 await process_cart(query.message, state)
 
             else:
-
                 data["products"][idx][2] += 1 if "increase" == action else -1
                 count_in_cart = data["products"][idx][2]
 
                 if count_in_cart == 0:
-
                     db.query(
                         """DELETE FROM cart
                     WHERE cid = ? AND idx = ?""",
@@ -109,7 +95,6 @@ async def product_callback_handler(
 
                     await query.message.delete()
                 else:
-
                     db.query(
                         """UPDATE cart 
                     SET quantity = ? 
@@ -124,7 +109,6 @@ async def product_callback_handler(
 
 @dp.message_handler(IsUser(), text="📦 Оформить заказ")
 async def process_checkout(message: Message, state: FSMContext):
-
     await CheckoutState.check_cart.set()
     await checkout(message, state)
 
@@ -134,9 +118,7 @@ async def checkout(message, state):
     total_price = 0
 
     async with state.proxy() as data:
-
         for title, price, count_in_cart in data["products"].values():
-
             tp = count_in_cart * price
             answer += f"<b>{title}</b> * {count_in_cart}шт. = {tp}₽\n"
             total_price += tp
@@ -175,18 +157,14 @@ async def process_name_back(message: Message, state: FSMContext):
 
 @dp.message_handler(IsUser(), state=CheckoutState.name)
 async def process_name(message: Message, state: FSMContext):
-
     async with state.proxy() as data:
-
         data["name"] = message.text
 
         if "address" in data.keys():
-
             await confirm(message)
             await CheckoutState.confirm.set()
 
         else:
-
             await CheckoutState.next()
             await message.answer(
                 "Укажите свой адрес места жительства.", reply_markup=back_markup()
@@ -195,9 +173,7 @@ async def process_name(message: Message, state: FSMContext):
 
 @dp.message_handler(IsUser(), text=back_message, state=CheckoutState.address)
 async def process_address_back(message: Message, state: FSMContext):
-
     async with state.proxy() as data:
-
         await message.answer(
             "Изменить имя с <b>" + data["name"] + "</b>?", reply_markup=back_markup()
         )
@@ -207,7 +183,6 @@ async def process_address_back(message: Message, state: FSMContext):
 
 @dp.message_handler(IsUser(), state=CheckoutState.address)
 async def process_address(message: Message, state: FSMContext):
-
     async with state.proxy() as data:
         data["address"] = message.text
 
@@ -216,7 +191,6 @@ async def process_address(message: Message, state: FSMContext):
 
 
 async def confirm(message):
-
     await message.answer(
         "Убедитесь, что все правильно оформлено и подтвердите заказ.",
         reply_markup=confirm_markup(),
@@ -234,7 +208,6 @@ async def process_confirm_invalid(message: Message):
 
 @dp.message_handler(IsUser(), text=back_message, state=CheckoutState.confirm)
 async def process_confirm(message: Message, state: FSMContext):
-
     await CheckoutState.address.set()
 
     async with state.proxy() as data:
@@ -246,16 +219,14 @@ async def process_confirm(message: Message, state: FSMContext):
 
 @dp.message_handler(IsUser(), text=confirm_message, state=CheckoutState.confirm)
 async def process_confirm(message: Message, state: FSMContext):
-
     enough_money = True  # enough money on the balance sheet
     markup = ReplyKeyboardRemove()
 
     if enough_money:
-
-        logging.info("Deal was made.")
+        for i in ADMINS:
+            await bot.send_message(i, "Новый заказ!")
 
         async with state.proxy() as data:
-
             cid = message.chat.id
             products = [
                 idx + "=" + str(quantity)
@@ -282,7 +253,6 @@ async def process_confirm(message: Message, state: FSMContext):
                 reply_markup=markup,
             )
     else:
-
         await message.answer(
             "У вас недостаточно денег на счете. Пополните баланс!", reply_markup=markup
         )

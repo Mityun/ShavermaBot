@@ -6,7 +6,6 @@ category_cb = CallbackData("category", "id", "action")
 
 
 def categories_markup():
-
     global category_cb
 
     markup = InlineKeyboardMarkup()

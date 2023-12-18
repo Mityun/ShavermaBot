@@ -2,12 +2,11 @@ import os
 import handlers
 from aiogram import executor, types
 from aiogram.types import ReplyKeyboardMarkup, ReplyKeyboardRemove
-from data import config
 from loader import dp, db, bot
 import filters
 import logging
 
-filters.setup(dp)
+# filters.setup(dp)
 
 WEBAPP_HOST = "0.0.0.0"
 WEBAPP_PORT = int(os.environ.get("PORT", 5000))
@@ -17,10 +16,7 @@ admin_message = "Админ"
 
 @dp.message_handler(commands="start")
 async def cmd_start(message: types.Message):
-
     markup = ReplyKeyboardMarkup(resize_keyboard=True)
-
-    markup.row(user_message, admin_message)
 
     await message.answer(
         """Привет! 👋
@@ -41,9 +37,6 @@ async def cmd_start(message: types.Message):
 @dp.message_handler(text=user_message)
 async def user_mode(message: types.Message):
     cid = message.chat.id
-    if cid in config.ADMINS:
-        config.ADMINS.remove(cid)
-
     await message.answer(
         "Включен пользовательский режим.", reply_markup=ReplyKeyboardRemove()
     )
@@ -51,10 +44,7 @@ async def user_mode(message: types.Message):
 
 @dp.message_handler(text=admin_message)
 async def admin_mode(message: types.Message):
-
     cid = message.chat.id
-    if cid not in config.ADMINS:
-        config.ADMINS.append(cid)
 
     await message.answer("Включен админский режим.", reply_markup=ReplyKeyboardRemove())
 
