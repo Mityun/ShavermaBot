@@ -1,0 +1,1 @@
+{"version": "2.3.9", "fields": ["name", "names", "qname"], "fieldVectors": [["name/catalog", [0, 4.28]], ["names/catalog", [0, 0.713]], ["qname/catalog", [0, 1.427]]], "invertedIndex": [["catalog", {"name": {"catalog": {}}, "names": {"catalog": {}}, "qname": {"catalog": {}}, "_index": 0}]], "pipeline": []}

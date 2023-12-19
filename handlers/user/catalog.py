@@ -1,7 +1,4 @@
-"""
-Модуль: handlers_catalog
-Описание: Содержит обработчики сообщений и колбэков, относящихся к каталогу товаров.
-"""
+
 
 import logging
 from aiogram.types import Message, CallbackQuery
@@ -16,6 +13,7 @@ from filters import IsUser
 
 @dp.message_handler(IsUser(), text=catalog)
 async def process_catalog(message: Message):
+
     """
     Обработчик запроса на просмотр каталога товаров.
     Входные данные:
@@ -27,17 +25,13 @@ async def process_catalog(message: Message):
 @dp.callback_query_handler(IsUser(), category_cb.filter(action='view'))
 async def category_callback_handler(query: CallbackQuery, callback_data: dict):
     """
-    Обработчик выбора категории товаров.
-    Входные данные:
-        query: CallbackQuery - объект колбэка
-        callback_data: dict - параметры колбэка
-    Возможные ошибки:
-        TypeError - ошибка типа данных
-        KeyError - ошибка ключа
-
-    Возвращаемые данные:
-        Отсутствуют
+        :param query: CallbackQuery - объект колбэка
+        :param callback_data: dict - параметры колбэка
+        :rtype TypeError: ошибка типа данных
+        :rtype KeyError: ошибка ключа
+        :return none
     """
+
     products = db.fetchall('''SELECT * FROM products product
     WHERE product.tag = (SELECT title FROM categories WHERE idx=?) 
     AND product.idx NOT IN (SELECT idx FROM cart WHERE cid = ?)''',
