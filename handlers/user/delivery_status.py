@@ -1,5 +1,6 @@
 from aiogram.types import Message
 from loader import dp, db
+from utils.orders import order_to_text
 from .menu import delivery_status
 from filters import IsUser
 
@@ -18,8 +19,12 @@ async def delivery_status_answer(message, orders):
     res = ""
 
     for order in orders:
-        res += f"Заказ <b>№{order[3]}</b>"
-        answer = [" лежит на складе.", " уже в пути!", " прибыл и ждет вас на почте!"]
+        res += await order_to_text(order)
+        answer = [
+            "<b>Заказ пока что лежит на складе.</b>",
+            " уже в пути!",
+            " прибыл и ждет вас на почте!",
+        ]
 
         res += answer[0]
         res += "\n\n"
