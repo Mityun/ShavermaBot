@@ -1,6 +1,6 @@
 
 """
-    Sets up custom filters for checking status.
+    Sets up custom filters for checking status
     """
 
 from aiogram import Dispatcher

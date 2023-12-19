@@ -14,4 +14,10 @@ from .menu import balance
 
 @dp.message_handler(IsUser(), text=balance)
 async def process_balance(message: Message, state: FSMContext):
+    """function for balance check
+
+    :param message: Message
+    :param state: FSMContext
+    :return: str
+    """
     await message.answer('Ваш кошелек пуст! Чтобы его пополнить нужно...')

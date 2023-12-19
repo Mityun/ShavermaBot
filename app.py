@@ -1,3 +1,7 @@
+"""
+    The main project module
+"""
+
 import asyncio
 import logging
 import sys

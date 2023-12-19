@@ -1,3 +1,6 @@
+"""
+    User interface functional
+"""
 from .menu import dp
 from .cart import dp
 from .wallet import dp

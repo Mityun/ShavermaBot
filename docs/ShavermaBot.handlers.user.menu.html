@@ -1,0 +1,694 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "DTD/xhtml1-strict.dtd">
+<html>
+  
+
+  <head>
+    
+    <title>ShavermaBot.handlers.user.menu</title>
+    <meta name="generator" content="pydoctor 23.9.1"> 
+        
+    </meta>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1" />
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="apidocs.css" />
+    <link rel="stylesheet" type="text/css" href="extra.css" />
+</head>
+
+  <body>
+
+    
+
+    <nav class="navbar navbar-default mainnavbar">
+      
+  
+  <div class="container-fluid">
+
+
+    <div class="navbar-header">
+      
+      <div class="navlinks">
+        <span class="navbar-brand">
+          ShavermaBot <a href="index.html">API Documentation</a>
+        </span>
+
+        <a href="moduleIndex.html">
+          Modules
+        </a>
+
+        <a href="classIndex.html">
+          Classes
+        </a>
+
+        <a href="nameIndex.html">
+          Names
+        </a>
+
+        <div id="search-box-container">
+          <div class="input-group">
+            <input id="search-box" type="search" name="search-query" placeholder="Search..." aria-label="Search" minlength="2" class="form-control" autocomplete="off" />
+            
+            <span class="input-group-btn">
+              <a style="display: none;" class="btn btn-default" id="search-clear-button" title="Clear" onclick="clearSearch()"><img src="fonts/x-circle.svg" alt="Clear" /></a>
+              <a class="btn btn-default" id="search-help-button" title="Help" onclick="toggleSearchHelpText()"><img src="fonts/info.svg" alt="Help" /></a>
+            </span>
+          </div>
+        </div>
+
+      </div>
+
+      <div id="search-results-container" style="display: none;">
+        
+        <div id="search-buttons">
+          <span class="label label-default" id="search-docstrings-button">
+          <label class="checkbox-inline">
+            <input type="checkbox" id="toggle-search-in-docstrings-checkbox" value="false" onclick="toggleSearchInDocstrings()">
+              search in docstrings
+            </input>
+          </label>
+          </span>
+          
+        </div>
+        
+        <noscript>
+            <h1>Cannot search: JavaScript is not supported/enabled in your browser.</h1>
+        </noscript>
+
+        <div class="hint" id="search-help-box">
+          <p class="rst-last">
+      
+            Search bar offers the following options:
+            <ul>   
+                <li>
+                  <strong>Term presence.</strong> The below example searches for documents that 
+                    must contain “foo”, might contain “bar” and must not contain “baz”: <code>+foo bar -baz</code>
+                </li> 
+
+                <li>
+                  <strong>Wildcards.</strong> The below example searches for documents with words beginning with “foo”: <code>foo*</code>
+                </li> 
+
+                <li>
+                  <strong>Search in specific fields.</strong> The following search matches all objects 
+                  in "twisted.mail" that matches “search”: <code>+qname:twisted.mail.* +search</code>
+
+                  <p>
+                    Possible fields: 'name', 'qname' (fully qualified name), 'docstring', and 'kind'.
+                    Last two fields are only applicable if "search in docstrings" is enabled.
+                  </p>
+                </li>
+
+                <li>
+                  <strong>Fuzzy matches.</strong> The following search matches all documents 
+                  that have a word within 1 edit distance of “foo”: <code>foo~1</code>
+                </li>
+            </ul>
+
+          </p>
+        </div>
+
+        <div id="search-status"> </div>
+
+        <div class="warning" id="search-warn-box" style="display: none;">
+          <p class="rst-last"><span id="search-warn"></span></p>
+        </div>
+
+        <table id="search-results">
+          <!-- Filled dynamically by JS -->
+        </table>
+        
+        <div style="margin-top: 8px;">
+          <p>Results provided by <a href="https://lunrjs.com">Lunr.js</a></p>
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
+</nav>
+    
+    <div class="container-fluid">
+
+      <!-- Side navigation -->
+      <div class="sidebarcontainer" style="display: none;">
+        
+        <div class="sidebar"><nav class="sidebar">
+  
+
+  <div>
+
+      <div class="thingTitle">
+        <span>Module</span>
+        <code class="thisobject"><a href="ShavermaBot.handlers.user.menu.html" class="internal-link" title="This module">menu</a></code> 
+      </div>
+      
+      <div>
+        
+
+        
+         
+
+        
+        
+
+        <div class="childrenKindTitle">Functions</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#admin_menu" class="internal-link" title="ShavermaBot.handlers.user.menu.admin_menu">admin<wbr></wbr>_menu</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#user_menu" class="internal-link" title="ShavermaBot.handlers.user.menu.user_menu">user<wbr></wbr>_menu</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        
+         
+
+        <div class="childrenKindTitle">Variables</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#balance" class="internal-link" title="ShavermaBot.handlers.user.menu.balance">balance</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#cart" class="internal-link" title="ShavermaBot.handlers.user.menu.cart">cart</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#catalog" class="internal-link" title="ShavermaBot.handlers.user.menu.catalog">catalog</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#delivery_status" class="internal-link" title="ShavermaBot.handlers.user.menu.delivery_status">delivery<wbr></wbr>_status</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#orders" class="internal-link" title="ShavermaBot.handlers.user.menu.orders">orders</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#questions" class="internal-link" title="ShavermaBot.handlers.user.menu.questions">questions</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#settings" class="internal-link" title="ShavermaBot.handlers.user.menu.settings">settings</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        
+         
+        
+      </div>
+  </div><div>
+
+      <div class="thingTitle">
+        <span>Package</span>
+        <code><a href="ShavermaBot.handlers.user.html" class="internal-link" title="The parent of this module">user</a></code> 
+      </div>
+      
+      <div>
+        
+
+        <div class="childrenKindTitle">Modules</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="ShavermaBot.handlers.user.cart.html" class="internal-link" title="ShavermaBot.handlers.user.cart">cart</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="ShavermaBot.handlers.user.catalog.html" class="internal-link" title="ShavermaBot.handlers.user.catalog">catalog</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="ShavermaBot.handlers.user.delivery_status.html" class="internal-link" title="ShavermaBot.handlers.user.delivery_status">delivery<wbr></wbr>_status</a></code>
+            </div>
+        
+
+    </li><li class=" thisobject">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="ShavermaBot.handlers.user.menu.html" class="internal-link" title="ShavermaBot.handlers.user.menu">menu</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="ShavermaBot.handlers.user.sos.html" class="internal-link" title="ShavermaBot.handlers.user.sos">sos</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="ShavermaBot.handlers.user.wallet.html" class="internal-link" title="ShavermaBot.handlers.user.wallet">wallet</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        
+        
+
+        
+         
+
+        
+         
+
+        
+         
+
+        
+         
+        
+      </div>
+  </div>
+
+</nav>
+        </div>
+        <div id="collapseSideBar">
+          <a class="btn btn-link" onclick="toggleSideBarCollapse()" title="Toggle Sidebar Collapse">
+          </a>
+        </div> 
+        <script src="sidebartoggle.js" type="text/javascript"></script>
+       
+      </div>
+
+      <div id="main" class="">
+        
+
+        
+
+        <div class="page-header">
+          <h1 class="module"><code><code><a href="index.html" class="internal-link">ShavermaBot</a></code><wbr></wbr>.<code><a href="ShavermaBot.handlers.html" class="internal-link" title="ShavermaBot.handlers">handlers</a></code><wbr></wbr>.<code><a href="ShavermaBot.handlers.user.html" class="internal-link" title="ShavermaBot.handlers.user">user</a></code><wbr></wbr>.<code><a href="ShavermaBot.handlers.user.menu.html" class="internal-link" title="ShavermaBot.handlers.user.menu">menu</a></code></code></h1>
+          <div id="showPrivate">
+            <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+          </div>
+        </div>
+
+        <div class="categoryHeader">
+          module documentation
+        </div>
+
+        <div class="extrasDocstring">
+          
+          <p></p>
+        </div>
+
+        <div class="moduleDocstring">
+          <div><p class="undocumented">Undocumented</p></div>
+        </div>
+
+        <div id="splitTables">
+          <table class="children sortable" id="id18">
+  
+  
+  <tr class="function">
+    
+    <td>Async Function</td>
+    <td><code><a href="#admin_menu" class="internal-link" title="ShavermaBot.handlers.user.menu.admin_menu">admin<wbr></wbr>_menu</a></code></td>
+    <td>This function handles the 'menu' command for admin users and provides a custom keyboard for admin options.</td>
+  </tr><tr class="function">
+    
+    <td>Async Function</td>
+    <td><code><a href="#user_menu" class="internal-link" title="ShavermaBot.handlers.user.menu.user_menu">user<wbr></wbr>_menu</a></code></td>
+    <td>This function handles the 'menu' command for regular users and provides a custom keyboard for user options.</td>
+  </tr><tr class="variable">
+    
+    <td>Variable</td>
+    <td><code><a href="#balance" class="internal-link" title="ShavermaBot.handlers.user.menu.balance">balance</a></code></td>
+    <td>balance</td>
+  </tr><tr class="variable">
+    
+    <td>Variable</td>
+    <td><code><a href="#cart" class="internal-link" title="ShavermaBot.handlers.user.menu.cart">cart</a></code></td>
+    <td>cart</td>
+  </tr><tr class="variable">
+    
+    <td>Variable</td>
+    <td><code><a href="#catalog" class="internal-link" title="ShavermaBot.handlers.user.menu.catalog">catalog</a></code></td>
+    <td>catalog</td>
+  </tr><tr class="variable">
+    
+    <td>Variable</td>
+    <td><code><a href="#delivery_status" class="internal-link" title="ShavermaBot.handlers.user.menu.delivery_status">delivery<wbr></wbr>_status</a></code></td>
+    <td>delivery_status</td>
+  </tr><tr class="variable">
+    
+    <td>Variable</td>
+    <td><code><a href="#orders" class="internal-link" title="ShavermaBot.handlers.user.menu.orders">orders</a></code></td>
+    <td>orders</td>
+  </tr><tr class="variable">
+    
+    <td>Variable</td>
+    <td><code><a href="#questions" class="internal-link" title="ShavermaBot.handlers.user.menu.questions">questions</a></code></td>
+    <td>questions</td>
+  </tr><tr class="variable">
+    
+    <td>Variable</td>
+    <td><code><a href="#settings" class="internal-link" title="ShavermaBot.handlers.user.menu.settings">settings</a></code></td>
+    <td>settings</td>
+  </tr>
+</table>
+          
+
+            
+        </div>
+
+        <div id="childList">
+          <div class="basefunction">
+  
+  
+  <a name="ShavermaBot.handlers.user.menu.admin_menu">
+    
+  </a>
+  <a name="admin_menu">
+    
+  </a>
+  <div class="functionHeader">
+    
+    @dp.message_handler(<wbr></wbr>IsAdmin(), <wbr></wbr>commands=<span class="rst-variable-quote">'</span><span class="rst-variable-string">menu</span><span class="rst-variable-quote">'</span>)<br />
+    <span class="py-keyword">async def</span> <span class="py-defname">admin_menu</span><span class="function-signature">(message: <code>Message</code>)</span>:
+    
+    <a class="headerLink" href="#admin_menu" title="ShavermaBot.handlers.user.menu.admin_menu">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p>This function handles the 'menu' command for admin users and provides a custom keyboard for admin options.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">message:</span><code>Message</code></td><td class="fieldArgDesc">The message object from the admin user</td></tr></table></div>
+  </div>
+</div><div class="basefunction">
+  
+  
+  <a name="ShavermaBot.handlers.user.menu.user_menu">
+    
+  </a>
+  <a name="user_menu">
+    
+  </a>
+  <div class="functionHeader">
+    
+    @dp.message_handler(<wbr></wbr>IsUser(), <wbr></wbr>commands=<span class="rst-variable-quote">'</span><span class="rst-variable-string">menu</span><span class="rst-variable-quote">'</span>)<br />
+    <span class="py-keyword">async def</span> <span class="py-defname">user_menu</span><span class="function-signature">(message: <code>Message</code>)</span>:
+    
+    <a class="headerLink" href="#user_menu" title="ShavermaBot.handlers.user.menu.user_menu">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p>This function handles the 'menu' command for regular users and provides a custom keyboard for user options.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">message:</span><code>Message</code></td><td class="fieldArgDesc">The message object from the regular user</td></tr></table></div>
+  </div>
+</div><div class="basevariable">
+  
+  
+  <a name="ShavermaBot.handlers.user.menu.balance">
+    
+  </a>
+  <a name="balance">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">balance</span>: <code>str</code> =
+    
+    <a class="headerLink" href="#balance" title="ShavermaBot.handlers.user.menu.balance">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p>balance</p></div>
+    
+  </div>
+</div><div class="basevariable">
+  
+  
+  <a name="ShavermaBot.handlers.user.menu.cart">
+    
+  </a>
+  <a name="cart">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">cart</span>: <code>str</code> =
+    
+    <a class="headerLink" href="#cart" title="ShavermaBot.handlers.user.menu.cart">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p>cart</p></div>
+    
+  </div>
+</div><div class="basevariable">
+  
+  
+  <a name="ShavermaBot.handlers.user.menu.catalog">
+    
+  </a>
+  <a name="catalog">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">catalog</span>: <code>str</code> =
+    
+    <a class="headerLink" href="#catalog" title="ShavermaBot.handlers.user.menu.catalog">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p>catalog</p></div>
+    
+  </div>
+</div><div class="basevariable">
+  
+  
+  <a name="ShavermaBot.handlers.user.menu.delivery_status">
+    
+  </a>
+  <a name="delivery_status">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">delivery_status</span>: <code>str</code> =
+    
+    <a class="headerLink" href="#delivery_status" title="ShavermaBot.handlers.user.menu.delivery_status">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p>delivery_status</p></div>
+    
+  </div>
+</div><div class="basevariable">
+  
+  
+  <a name="ShavermaBot.handlers.user.menu.orders">
+    
+  </a>
+  <a name="orders">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">orders</span>: <code>str</code> =
+    
+    <a class="headerLink" href="#orders" title="ShavermaBot.handlers.user.menu.orders">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p>orders</p></div>
+    
+  </div>
+</div><div class="basevariable">
+  
+  
+  <a name="ShavermaBot.handlers.user.menu.questions">
+    
+  </a>
+  <a name="questions">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">questions</span>: <code>str</code> =
+    
+    <a class="headerLink" href="#questions" title="ShavermaBot.handlers.user.menu.questions">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p>questions</p></div>
+    
+  </div>
+</div><div class="basevariable">
+  
+  
+  <a name="ShavermaBot.handlers.user.menu.settings">
+    
+  </a>
+  <a name="settings">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">settings</span>: <code>str</code> =
+    
+    <a class="headerLink" href="#settings" title="ShavermaBot.handlers.user.menu.settings">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p>settings</p></div>
+    
+  </div>
+</div>
+        </div>
+      
+      </div>
+    </div>
+
+    <footer class="navbar navbar-default">
+
+  
+  <div class="container">
+    <a href="index.html">API Documentation</a> for ShavermaBot,
+  generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
+    23.9.1 at 2023-12-19 07:31:15.
+  </div>
+
+  <!-- Search related scripts needs to be loaded at the end of HTML 
+    parsing not to introduce overhead and display HTML data asap -->
+  <script src="ajax.js" type="text/javascript"></script>
+  <script src="searchlib.js" type="text/javascript"></script>
+  <script src="search.js" type="text/javascript"></script>
+
+</footer>
+  
+    <script src="pydoctor.js" type="text/javascript"></script>
+
+  </body>
+</html>
