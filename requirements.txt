@@ -1,1 +1,1 @@
-aiogram==2.25.2 python app.py
+aiogram==2.25.2
